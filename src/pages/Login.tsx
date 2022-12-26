@@ -109,6 +109,23 @@ const Box = styled.div`
         pointer-events: none;
         transition: .5s;
     }
+
+    @media (min-width: 768px) {
+        width: 50%;
+        height: 50%;
+        padding: 60px;
+    }
+
+    @media (min-width: 1024px) {
+        width: 30%;
+        padding: 20px;
+    }
+
+    @media (min-width: 1369px) {
+        width: 20%;
+        height: 40%;
+        padding: 10px;
+    }
 `;
 
 const ButtonForm = styled.div`
