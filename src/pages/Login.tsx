@@ -1,23 +1,64 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { toast } from "react-toastify";
 
 import logo from "../assets/tasky.png";
+import { login, signUp } from "../services/requests";
+import UserContext from "../contexts/UserContext";
 
 export default function Login() {
-	const [username, setUsername] = useState("");
+	const { setUserData } = useContext(UserContext);
+	const navigate = useNavigate();
+	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
+
+	function sendForm(e: React.FormEvent) {
+		e.preventDefault();
+
+		const body = {
+			userName,
+			password,
+		};
+
+		if (window.location.pathname === "/login") {
+			const req = login(body);
+			req.then(res => {
+				setUserData({
+					token: res.data.token,
+					userName: res.data.userName
+				});
+				toast.success("Login realizado com sucesso!");
+				localStorage.setItem("user", JSON.stringify(res.data));
+				navigate("/home");
+			}).catch(err => {
+				console.log(err.request.status);
+				toast.error(err.response.data.message);
+			});
+		} else {
+			const req = signUp(body);
+			req.then(() => {
+				toast.success("Cadastro realizado com sucesso!");
+				setUserName("");
+				setPassword("");
+				navigate("/login");
+			}).catch(err => {
+				console.log(err);
+				toast.error(err.response.data.message);
+			});
+		}
+	}
 
 	return (
 		<Content>
 			<Box>
 				<img src={logo} alt="Tasky" />
-				<form>
+				<form onSubmit={sendForm}>
 					<div>
 						<input 
 							type="text"
-							value={username}
-							onChange={e => setUsername(e.target.value)}
+							value={userName}
+							onChange={e => setUserName(e.target.value)}
 							onInvalid={e => (e.target as HTMLInputElement).setCustomValidity("Please enter a username")}
 							onInput={e => (e.target as HTMLInputElement).setCustomValidity("")}
 							required
@@ -36,19 +77,39 @@ export default function Login() {
 						<label>Senha</label>                      
 					</div>
 					<ButtonForm >
-						<Submit type="submit">
-							<span></span>
-							<span></span>
-							<span></span>
-							<span></span> 
-                            Entrar
-						</Submit>
-						<div>
-                            Não tem uma conta?
-							<a href="/sign-up">
-                                Cadastre-se
-							</a>                           
-						</div>     
+						{window.location.pathname === "/login" ? (
+							<>
+								<Submit type="submit">
+									<span></span>
+									<span></span>
+									<span></span>
+									<span></span>
+                                    Entrar
+								</Submit>
+								<div>
+                                    Não tem uma conta?
+									<a href="/sign-up">
+                                        Cadastre-se
+									</a>
+								</div>
+							</>
+						) : (
+							<>
+								<Submit type="submit">
+									<span></span>
+									<span></span>
+									<span></span>
+									<span></span>
+                                    Cadastrar
+								</Submit>
+								<div>
+                                    Já tem uma conta?
+									<a href="/login">
+                                        Cadastre-se
+									</a>
+								</div>
+							</>
+						)}
 					</ButtonForm>
 				</form>
 			</Box>
@@ -65,7 +126,7 @@ const Content = styled.div`
 
 const Box = styled.div`
     width: 80%;
-    height: 80%;
+    height: 85%;
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
     background-color: #131315;
     display: flex;
@@ -76,7 +137,7 @@ const Box = styled.div`
 
     img {
         width: 96px;
-        margin-bottom: 40px;
+        margin: 20px 0 40px 0;
     }
 
     input{
@@ -112,7 +173,7 @@ const Box = styled.div`
 
     @media (min-width: 768px) {
         width: 50%;
-        height: 50%;
+        height: 85%;
         padding: 60px;
     }
 
@@ -124,24 +185,24 @@ const Box = styled.div`
     @media (min-width: 1369px) {
         width: 20%;
         height: 40%;
-        padding: 10px;
+        padding: 60px 10px;
     }
 `;
 
 const ButtonForm = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     margin-top: 20px;
 
     div{
         font-size: 14px;
         text-decoration: none;
         color: #CBBDDB;
-        margin: auto;
-        width: 60%;
         text-align: center;
         display: flex;
         flex-direction: column;
+        margin: 15px 0;
 
         a{
             margin-top: 5px;

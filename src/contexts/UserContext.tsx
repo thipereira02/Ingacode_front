@@ -1,8 +1,8 @@
 import { createContext } from "react";
 
 interface UserContextProps {
-    userData: string;
-    setUserData: (userData: string) => void;
+    userData: any;
+    setUserData: (userData: any) => void;
 }
 
 const UserContext = createContext({} as UserContextProps);

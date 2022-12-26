@@ -38,6 +38,7 @@ module.exports = {
 			"always"
 		],
 		"import/no-unresolved": "off",
+		"no-implicity-any": "off",
 	},
 	"settings": {
 		"import/resolver": {
