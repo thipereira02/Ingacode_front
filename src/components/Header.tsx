@@ -29,7 +29,7 @@ const Container = styled.div<{ left: boolean }>`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 40px;
+    padding: 0 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     font-size: 16px;
     font-weight: 500;
@@ -52,5 +52,6 @@ const Container = styled.div<{ left: boolean }>`
     @media (min-width: 768px) {
         left: ${props => props.left ? "70px" : "250px"};
         font-size: 18px;
+        padding: 0 40px;
     }
 `;

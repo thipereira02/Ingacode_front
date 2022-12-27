@@ -58,6 +58,7 @@ const Container = styled.aside<{ sidebarWidth: boolean }>`
     align-items: center;
     transition: width .2s;
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    z-index: 1;
 
     @media (min-width: 768px) {
         width: ${props => props.sidebarWidth ? "70px" : "250px"};
