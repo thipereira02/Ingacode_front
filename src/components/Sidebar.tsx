@@ -115,7 +115,7 @@ const Icon = styled.div<{ sidebarWidth: boolean, disabled: boolean }>`
 
 const HomeIcon = styled(FaHome)<{ sidebarWidth: boolean }>`
     font-size: 25px;
-    color: #FFF;
+    color: #BFBFBF;
 
     @media(min-width: 768px){
         font-size: 30px;
@@ -124,7 +124,7 @@ const HomeIcon = styled(FaHome)<{ sidebarWidth: boolean }>`
 
 const ProjectsIcon = styled(FaProjectDiagram)<{ sidebarWidth: boolean }>`
     font-size: 25px;
-    color: #FFF;
+    color: #BFBFBF;
 
     @media(min-width: 768px){
         font-size: 30px;
@@ -133,7 +133,7 @@ const ProjectsIcon = styled(FaProjectDiagram)<{ sidebarWidth: boolean }>`
 
 const LogoutIcon = styled(FaPowerOff)<{ sidebarWidth: boolean }>`
     font-size: 25px;
-    color: #FFF;
+    color: #BFBFBF;
 
     @media(min-width: 768px){
         font-size: 30px;

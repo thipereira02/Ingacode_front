@@ -31,6 +31,9 @@ const Container = styled.div<{ left: boolean }>`
     justify-content: space-between;
     padding: 0 40px;
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    font-size: 16px;
+    font-weight: 500;
+    color: #BFBFBF;
 
     div{
         width: 40px;
@@ -43,9 +46,11 @@ const Container = styled.div<{ left: boolean }>`
         font-size: 16px;
         font-weight: 700;
         margin-left: 10px;
+        color: #BFBFBF;
     }
 
     @media (min-width: 768px) {
         left: ${props => props.left ? "70px" : "250px"};
+        font-size: 18px;
     }
 `;
