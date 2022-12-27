@@ -105,7 +105,7 @@ export default function Login() {
 								<div>
                                     Já tem uma conta?
 									<a href="/login">
-                                        Cadastre-se
+                                        Faça o login
 									</a>
 								</div>
 							</>
