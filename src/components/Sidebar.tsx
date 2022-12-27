@@ -1,23 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { FaProjectDiagram, FaHome, FaPowerOff, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 import symbol from "../assets/logo.png";
 import logo from "../assets/tasky.png";
 
-export default function Sidebar() {
-	const [sidebar, setSidebar] = useState(true);
+export default function Sidebar({ sidebar, setSidebar, setActivePage }: { sidebar:boolean, setSidebar: (sidebar: boolean) => void, setActivePage: (activePage: string) => void }) {
+	const navigate = useNavigate();
+
+	function goTo(path: string) {
+		navigate(path);
+		if (path === "/") setActivePage("Home");
+		else setActivePage(path);
+	}
 
 	return (
 		<>
-			<Container onMouseOver={() => setSidebar(false)} onMouseLeave={() => setSidebar(true)} sidebarWidth={sidebar}>
+			<Container 
+				onMouseOver={() => setSidebar(false)} 
+				onMouseLeave={() => setSidebar(true)} 
+				sidebarWidth={sidebar}
+			>
 				<Icons sidebarWidth={sidebar}>
 					<img src={sidebar ? symbol : logo} alt="Logo Tasky" />
-					<Icon sidebarWidth={sidebar} disabled={sidebar}>
+					<Icon sidebarWidth={sidebar} disabled={sidebar} onClick={() => goTo("/")} >
 						<HomeIcon  sidebarWidth={sidebar}/>
 						<p>Home</p>
 					</Icon>
-					<Icon sidebarWidth={sidebar} disabled={sidebar}>
+					<Icon sidebarWidth={sidebar} disabled={sidebar} onClick={() => goTo("/projetos")}>
 						<ProjectsIcon sidebarWidth={sidebar} />
 						<p>Projetos</p>
 					</Icon>
@@ -46,6 +57,7 @@ const Container = styled.aside<{ sidebarWidth: boolean }>`
     justify-content: space-between;
     align-items: center;
     transition: width .2s;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
 
     @media (min-width: 768px) {
         width: ${props => props.sidebarWidth ? "70px" : "250px"};
@@ -135,11 +147,12 @@ const Button = styled.div<{ position: boolean }>`
     position: fixed;
     left: ${props => props.position ? "50px" : "150px"};
     bottom: calc(50vh - 60px);
-    width: 20px;
+    width: 15px;
     height: 120px;
     background-color: #131315;
     transition: left .2s;
     cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
 
     @media(min-width: 768px) {
         left: ${props => props.position ? "70px" : "250px"};
