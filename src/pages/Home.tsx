@@ -46,7 +46,7 @@ export default function Home() {
 				<Projects>
 					{projects.slice(0, 3).map((p) => (
 						<Project key={p.id}>
-							{p.name}
+							<p>{p.name}</p>
 						</Project>
 					))}
 				</Projects>
@@ -75,10 +75,9 @@ const Content = styled.div`
 	h3{
 		color: #FFF;
 		font-size: 17px;
-		font-weight: 500;
+		font-weight: 700;
 		line-height: 20px;
-		margin-top: 40px;
-		margin-bottom: 20px;
+		margin: 40px 0 20px;
 	}
 
 	@media (min-width: 768px) {
@@ -93,12 +92,18 @@ const Content = styled.div`
 			font-size: 30px;
 			line-height: 35px;
 		}
+
+		h3{
+			font-size: 20px;
+			line-height: 23px;
+			margin: 50px 0 20px;
+		}
 	}
 `;
 
 const NewProject = styled.div`
-	width: 70px;
-	height: 70px;
+	width: 170px;
+	height: 80px;
 	background: #1E1782;
 	display: flex;
 	justify-content: center;
@@ -107,10 +112,11 @@ const NewProject = styled.div`
 	cursor: pointer;
 	margin-right: 10px;
 	margin-bottom: 10px;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
 	@media (min-width: 768px) {
-		width: 100px;
-		height: 100px;
+		width: 242px;
+		height: 112px;
 		font-size: 60px;
 	}
 `;
@@ -122,36 +128,36 @@ const Projects = styled.div`
 `;
 
 const Project = styled.div`
-	width: 70px;
-	height: 70px;
-	font-size: 40px;
+	width: 170px;
+	height: 80px;
+	font-size: 16px;
+	font-weight: 500;
 	margin-right: 20px;
 	margin-bottom: 20px;
-	outline: calc(70px/2) solid #0009;
-	outline-offset: calc(70px/-2);
+	word-break: break-all;
 	cursor: pointer;
-	transition: 0.3s;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
-	&:hover{
-		outline: 4px solid #1E1782;
-		outline-offset: 10px;
-		background: #1E1782;
-	}
+	padding: 10px;
+	background: #1E1782;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
 	@media (min-width: 768px) {
-		width: 100px;
-		height: 100px;
-		font-size: 60px;
-		outline: calc(100px/2) solid #0009;
-		outline-offset: calc(100px/-2);
-		margin-bottom: 25px;
+		width: 242px;
+		height: 112px;
+		font-size: 20px;
 		margin-right: 25px;
+		margin-bottom: 25px;
+		padding: 15px;
+	}
+
+	@media (min-width: 1024px) {
+		outline: calc(115px/2) solid #0009;
+		outline-offset: calc(113px/-2);
+		transition: 0.3s;
 
 		&:hover{
+			outline: 4px solid #1E1782;
 			outline-offset: 12px;
+			background: #1E1782;
 		}
 	}
 `;
