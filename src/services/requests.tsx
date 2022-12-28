@@ -21,3 +21,7 @@ export function signUp(body: { userName: string; password: string }) {
 export function getProjects(token: string) {
 	return axios.get(`${BASE_URL}/projects`, setConfig(token));
 }
+
+export function createProject(token: string, body: { name: string }) {
+	return axios.post(`${BASE_URL}/new-project`, body, setConfig(token));
+}

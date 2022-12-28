@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { FaProjectDiagram, FaHome, FaPowerOff, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 import symbol from "../assets/logo.png";
 import logo from "../assets/tasky.png";
+import ActivePageContext from "../contexts/ActivePageContext";
 
-export default function Sidebar({ sidebar, setSidebar, setActivePage }: { sidebar:boolean, setSidebar: (sidebar: boolean) => void, setActivePage: (activePage: string) => void }) {
+export default function Sidebar({ sidebar, setSidebar }: { sidebar:boolean, setSidebar: (sidebar: boolean) => void }) {
 	const navigate = useNavigate();
+	const { setActivePage } = useContext(ActivePageContext);
 
 	function goTo(path: string) {
 		navigate(path);

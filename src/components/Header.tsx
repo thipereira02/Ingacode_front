@@ -2,10 +2,12 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 
 import UserContext from "../contexts/UserContext";
+import ActivePageContext from "../contexts/ActivePageContext";
 
-export default function Header({ sidebar, activePage }: { sidebar: boolean, activePage: string }) {
+export default function Header({ sidebar }: { sidebar: boolean }) {
 	const user = useContext(UserContext);
-	const page = activePage.substring(1)[0].toUpperCase() + activePage.substring(2);
+	const { activePage } = useContext(ActivePageContext);
+	const page = (activePage.substring(1)[0].toUpperCase() + activePage.substring(1).slice(1).toLowerCase()).replace("-", " ");
 
 	return (
 		<Container left={sidebar}>

@@ -5,15 +5,19 @@ import { TbNewSection, TbDotsCircleHorizontal } from "react-icons/tb";
 import { toast } from "react-toastify";
 
 import UserContext from "../contexts/UserContext";
+import ActivePageContext from "../contexts/ActivePageContext";
 import { getProjects } from "../services/requests";
 import App from "../layouts/App";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-	const userData = useContext(UserContext);
+	const navigate = useNavigate();
+	const { userData } = useContext(UserContext);
+	const { setActivePage } = useContext(ActivePageContext);
 	const [projects, setProjects] = useState<any[]>([]);
 
 	useEffect(() => {
-		const token = userData.userData.token;
+		const token = userData.token;
 		const req = getProjects(token);
 		req.then(res => {
 			setProjects(res.data);
@@ -22,13 +26,18 @@ export default function Home() {
 			toast.error(err.response.data.message);
 		});
 	}, []);
+
+	function goTo(path: string){
+		navigate(path);
+		setActivePage(path);
+	}
 	
 	return (
 		<App>
-			<h1>Olá, {userData.userData.userName}</h1>
+			<h1>Olá, {userData.userName}</h1>
 			<h2>O que vai fazer hoje?</h2>
 			<h3>Iniciar um novo projeto</h3>
-			<NewProject>
+			<NewProject onClick={() => goTo("/novo-projeto")} >
 				<TbNewSection />
 			</NewProject>
 			<h3>Seus projetos recentes</h3>
@@ -42,7 +51,7 @@ export default function Home() {
 							</Project>
 						))}
 						<Invisible>
-							<DotsIcon onClick={() => window.location.href = "/projetos"} />
+							<DotsIcon onClick={() => goTo("/projetos")} />
 						</Invisible>
 					</>
 				)}

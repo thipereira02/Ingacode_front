@@ -7,12 +7,11 @@ import Container from "../components/Container";
 
 export default function App({ children }: any) {
 	const [sidebar, setSidebar] = useState(true);
-	const [activePage, setActivePage] = useState("/home");
 
 	return (
 		<>
-			<Sidebar sidebar={sidebar} setSidebar={setSidebar} setActivePage={setActivePage} />
-			<Header sidebar={sidebar} activePage={activePage} />
+			<Sidebar sidebar={sidebar} setSidebar={setSidebar} />
+			<Header sidebar={sidebar} />
 			<Container>
 				{children}
 			</Container>
