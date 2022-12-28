@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { TbNewSection } from "react-icons/tb";
+import { TbNewSection, TbDotsCircleHorizontal } from "react-icons/tb";
 import { toast } from "react-toastify";
 
 import Header from "../components/Header";
@@ -49,6 +49,9 @@ export default function Home() {
 							<p>{p.name}</p>
 						</Project>
 					))}
+					<Invisible>
+						<DotsIcon onClick={() => window.location.href = "/projetos"} />
+					</Invisible>
 				</Projects>
 			</Content>
 		</>
@@ -135,6 +138,7 @@ const Project = styled.div`
 	margin-right: 20px;
 	margin-bottom: 20px;
 	word-break: break-all;
+	overflow-y: hidden;
 	cursor: pointer;
 	padding: 10px;
 	background: #1E1782;
@@ -158,6 +162,33 @@ const Project = styled.div`
 			outline: 4px solid #1E1782;
 			outline-offset: 12px;
 			background: #1E1782;
+		}
+	}
+`;
+
+const Invisible = styled.div`
+	width: 170px;
+	height: 80px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+`;
+
+const DotsIcon = styled(TbDotsCircleHorizontal)`
+	font-size: 40px;
+	cursor: pointer;
+	margin-top: calc( 80px/2 - 40px/2 );
+	
+	@media (min-width: 768px) {
+		font-size: 50px;
+		margin-top: calc( 112px/2 - 25px );
+	}
+
+	@media (min-width: 1024px) {
+		opacity: 0.5;
+		transition: 0.3s;
+
+		&:hover{
+			opacity: 1;
 		}
 	}
 `;
