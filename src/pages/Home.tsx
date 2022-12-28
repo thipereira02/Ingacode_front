@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { TbNewSection, TbDotsCircleHorizontal } from "react-icons/tb";
 import { toast } from "react-toastify";
 
+import { Projects, Project } from "../layouts/Common";
 import UserContext from "../contexts/UserContext";
 import ActivePageContext from "../contexts/ActivePageContext";
 import { getProjects } from "../services/requests";
@@ -77,60 +78,6 @@ const NewProject = styled.div`
 		width: 242px;
 		height: 112px;
 		font-size: 60px;
-	}
-`;
-
-const Projects = styled.div`
-	display: flex;
-	flex-wrap: wrap;
-	margin-bottom: 20px;
-
-	p{
-		color: #BFBFBF;
-		font-size: 16px;
-		font-weight: 500;
-		line-height: 19px;
-
-		@media (min-width: 768px) {
-			font-size: 19px;
-			line-height: 22px;
-		}
-	}
-`;
-
-const Project = styled.div`
-	width: 170px;
-	height: 80px;
-	font-size: 16px;
-	font-weight: 500;
-	margin-right: 20px;
-	margin-bottom: 20px;
-	word-break: break-all;
-	overflow-y: hidden;
-	cursor: pointer;
-	padding: 10px;
-	background: #1E1782;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-	@media (min-width: 768px) {
-		width: 242px;
-		height: 112px;
-		font-size: 20px;
-		margin-right: 25px;
-		margin-bottom: 25px;
-		padding: 15px;
-	}
-
-	@media (min-width: 1024px) {
-		outline: calc(115px/2) solid #0009;
-		outline-offset: calc(113px/-2);
-		transition: 0.3s;
-
-		&:hover{
-			outline: 4px solid #1E1782;
-			outline-offset: 12px;
-			background: #1E1782;
-		}
 	}
 `;
 

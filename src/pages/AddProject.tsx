@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import App from "../layouts/App";
-import { Input, Label, ButtonForm, Submit } from "../layouts/Commom";
+import { Input, Label, ButtonForm, Submit } from "../layouts/Common";
 import UserContext from "../contexts/UserContext";
 import { createProject } from "../services/requests";
 

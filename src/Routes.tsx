@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import UserContext from "./contexts/UserContext";
 import ActivePageContext from "./contexts/ActivePageContext";
 import AddProject from "./pages/AddProject";
+import UserProjects from "./pages/UserProjects";
 
 const ProjectRoutes = () => {
 	const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("user") || "{}"));
@@ -35,6 +36,7 @@ const ProjectRoutes = () => {
 						<Route path="/sign-up" element={<Login />} />
 						<Route path="/home" element={<Home />} />
 						<Route path="/novo-projeto" element={<AddProject />} />
+						<Route path="/projetos" element={<UserProjects />} />
 						<Route path="*" element={<Navigate to="/" />} />
 					</Routes>
 				</BrowserRouter>

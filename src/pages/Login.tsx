@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { toast } from "react-toastify";
 
 import logo from "../assets/tasky.png";
-import { Input, Label, ButtonForm, Submit } from "../layouts/Commom";
+import { Input, Label, ButtonForm, Submit } from "../layouts/Common";
 import { login, signUp } from "../services/requests";
 import UserContext from "../contexts/UserContext";
 
