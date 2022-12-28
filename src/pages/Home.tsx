@@ -1,22 +1,35 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { TbNewSection } from "react-icons/tb";
+import { toast } from "react-toastify";
 
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import UserContext from "../contexts/UserContext";
+import { getProjects } from "../services/requests";
 
 export default function Home() {
 	const user = localStorage.getItem("user");
 	const userData = useContext(UserContext);
 	const [sidebar, setSidebar] = useState(true);
 	const [activePage, setActivePage] = useState("/");
+	const [projects, setProjects] = useState<any[]>([]);
 
 	useEffect(() => {
 		if (!user) {
 			window.location.href = "/login";
 		}
-	}, [user]);
+
+		const token = userData.userData.token;
+		const req = getProjects(token);
+		req.then(res => {
+			setProjects(res.data);
+		}).catch(err => {
+			console.log(err);
+			toast.error(err.response.data.message);
+		});
+	}, []);
 
 	return (
 		<>
@@ -31,18 +44,11 @@ export default function Home() {
 				</NewProject>
 				<h3>Seus projetos recentes</h3>
 				<Projects>
-					<Project>
-						T
-					</Project>
-					<Project>
-						T
-					</Project>
-					<Project>
-						T
-					</Project>
-					<Project>
-						T
-					</Project>
+					{projects.slice(0, 3).map((p) => (
+						<Project key={p.id}>
+							{p.name}
+						</Project>
+					))}
 				</Projects>
 			</Content>
 		</>

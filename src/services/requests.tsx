@@ -17,3 +17,7 @@ export function login(body: { userName: string; password: string }) {
 export function signUp(body: { userName: string; password: string }) {
 	return axios.post(`${BASE_URL}/sign-up`, body);
 }
+
+export function getProjects(token: string) {
+	return axios.get(`${BASE_URL}/projects`, setConfig(token));
+}
