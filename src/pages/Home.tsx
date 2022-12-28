@@ -4,15 +4,12 @@ import styled from "styled-components";
 import { TbNewSection, TbDotsCircleHorizontal } from "react-icons/tb";
 import { toast } from "react-toastify";
 
-import Header from "../components/Header";
-import Sidebar from "../components/Sidebar";
 import UserContext from "../contexts/UserContext";
 import { getProjects } from "../services/requests";
+import App from "../layouts/App";
 
 export default function Home() {
 	const userData = useContext(UserContext);
-	const [sidebar, setSidebar] = useState(true);
-	const [activePage, setActivePage] = useState("/home");
 	const [projects, setProjects] = useState<any[]>([]);
 
 	useEffect(() => {
@@ -27,82 +24,32 @@ export default function Home() {
 	}, []);
 	
 	return (
-		<>
-			<Sidebar sidebar={sidebar} setSidebar={setSidebar} setActivePage={setActivePage} />
-			<Header sidebar={sidebar} activePage={activePage} />
-			<Content>
-				<h1>Olá, {userData.userData.userName}</h1>
-				<h2>O que vai fazer hoje?</h2>
-				<h3>Iniciar um novo projeto</h3>
-				<NewProject>
-					<TbNewSection />
-				</NewProject>
-				<h3>Seus projetos recentes</h3>
-				<Projects>
-					{projects.length === 0 && <p>Você ainda não tem projetos. Comece agora mesmo.</p>}
-					{projects.length !== 0 && (
-						<>
-							{projects.slice(0, 3).map((p) => (
-								<Project key={p.id}>
-									<p>{p.name}</p>
-								</Project>
-							))}
-							<Invisible>
-								<DotsIcon onClick={() => window.location.href = "/projetos"} />
-							</Invisible>
-						</>
-					)}
-				</Projects>
-			</Content>
-		</>
+		<App>
+			<h1>Olá, {userData.userData.userName}</h1>
+			<h2>O que vai fazer hoje?</h2>
+			<h3>Iniciar um novo projeto</h3>
+			<NewProject>
+				<TbNewSection />
+			</NewProject>
+			<h3>Seus projetos recentes</h3>
+			<Projects>
+				{projects.length === 0 && <p>Você ainda não tem projetos. Comece agora mesmo.</p>}
+				{projects.length !== 0 && (
+					<>
+						{projects.slice(0, 3).map((p) => (
+							<Project key={p.id}>
+								<p>{p.name}</p>
+							</Project>
+						))}
+						<Invisible>
+							<DotsIcon onClick={() => window.location.href = "/projetos"} />
+						</Invisible>
+					</>
+				)}
+			</Projects>
+		</App>
 	);
 }
-
-const Content = styled.div`
-	padding: 80px 20px 0 90px;
-
-	h1{
-		color: #FFF;
-		font-size: 19px;
-		font-weight: 700;
-		line-height: 22px;
-	}
-
-	h2{
-		color: #BFBFBF;
-		font-size: 19px;
-		font-weight: 500;
-		line-height: 22px;
-	}
-
-	h3{
-		color: #FFF;
-		font-size: 17px;
-		font-weight: 700;
-		line-height: 20px;
-		margin: 40px 0 20px;
-	}
-
-	@media (min-width: 768px) {
-		padding: 100px 40px 0 110px;
-
-		h1{
-			font-size: 30px;
-			line-height: 35px;
-		}
-
-		h2{
-			font-size: 30px;
-			line-height: 35px;
-		}
-
-		h3{
-			font-size: 20px;
-			line-height: 23px;
-			margin: 50px 0 20px;
-		}
-	}
-`;
 
 const NewProject = styled.div`
 	width: 170px;

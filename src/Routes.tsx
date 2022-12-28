@@ -1,21 +1,21 @@
 import React, { useState } from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-
 import GlobalStyle from "./layouts/GlobalStyle";
-import Login from "./pages/Login";
+
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 import UserContext from "./contexts/UserContext";
 
-function App() {
+const ProjectRoutes = () => {
 	const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("user") || "{}"));
 
-	return (	
+	return (
 		<UserContext.Provider value={{ userData, setUserData }}>
 			<BrowserRouter>
 				<GlobalStyle />
-				<ToastContainer 
+				<ToastContainer
 					position="top-center"
 					autoClose={5000}
 					hideProgressBar={false}
@@ -25,8 +25,7 @@ function App() {
 					pauseOnFocusLoss
 					draggable
 					pauseOnHover
-					theme="dark"
-				/>
+					theme="dark" />
 				<Routes>
 					<Route path="/" element={<Login />} />
 					<Route path="/sign-up" element={<Login />} />
@@ -36,6 +35,6 @@ function App() {
 			</BrowserRouter>
 		</UserContext.Provider>
 	);
-}
+};
 
-export default App;
+export default ProjectRoutes; 
