@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { toast } from "react-toastify";
@@ -9,9 +9,16 @@ import UserContext from "../contexts/UserContext";
 
 export default function Login() {
 	const { setUserData } = useContext(UserContext);
+	const user = localStorage.getItem("user");
 	const navigate = useNavigate();
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
+
+	useEffect(() => {
+		if (window.location.pathname !== "/sign-up") {
+			user ? navigate("/home") : setUserData({ token: "", userName: "" });
+		}
+	}, []);
 
 	function sendForm(e: React.FormEvent) {
 		e.preventDefault();
@@ -21,7 +28,7 @@ export default function Login() {
 			password,
 		};
 
-		if (window.location.pathname === "/login") {
+		if (window.location.pathname === "/") {
 			const req = login(body);
 			req.then(res => {
 				setUserData({
@@ -41,7 +48,7 @@ export default function Login() {
 				toast.success("Cadastro realizado com sucesso!");
 				setUserName("");
 				setPassword("");
-				navigate("/login");
+				navigate("/");
 			}).catch(err => {
 				console.log(err);
 				toast.error(err.response.data.message);
@@ -77,7 +84,7 @@ export default function Login() {
 						<label>Senha</label>                      
 					</div>
 					<ButtonForm >
-						{window.location.pathname === "/login" ? (
+						{window.location.pathname === "/" ? (
 							<>
 								<Submit type="submit">
 									<span></span>
@@ -104,7 +111,7 @@ export default function Login() {
 								</Submit>
 								<div>
                                     Já tem uma conta?
-									<a href="/login">
+									<a href="/">
                                         Faça o login
 									</a>
 								</div>

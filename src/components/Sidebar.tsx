@@ -11,8 +11,7 @@ export default function Sidebar({ sidebar, setSidebar, setActivePage }: { sideba
 
 	function goTo(path: string) {
 		navigate(path);
-		if (path === "/") setActivePage("Home");
-		else setActivePage(path);
+		setActivePage(path);
 	}
 
 	return (
@@ -24,7 +23,7 @@ export default function Sidebar({ sidebar, setSidebar, setActivePage }: { sideba
 			>
 				<Icons sidebarWidth={sidebar}>
 					<img src={sidebar ? symbol : logo} alt="Logo Tasky" />
-					<Icon sidebarWidth={sidebar} disabled={sidebar} onClick={() => goTo("/")} >
+					<Icon sidebarWidth={sidebar} disabled={sidebar} onClick={() => goTo("/home")} >
 						<HomeIcon  sidebarWidth={sidebar}/>
 						<p>Home</p>
 					</Icon>

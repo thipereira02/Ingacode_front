@@ -5,11 +5,11 @@ import UserContext from "../contexts/UserContext";
 
 export default function Header({ sidebar, activePage }: { sidebar: boolean, activePage: string }) {
 	const user = useContext(UserContext);
-	if (activePage === "/") activePage = "Home";
+	const page = activePage.substring(1)[0].toUpperCase() + activePage.substring(2);
 
 	return (
 		<Container left={sidebar}>
-			<h1>{activePage}</h1>
+			<h1>{page}</h1>
 			<div>
 				{user.userData.userName.substring(0, 1).toUpperCase()}
 			</div>

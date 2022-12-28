@@ -10,17 +10,12 @@ import UserContext from "../contexts/UserContext";
 import { getProjects } from "../services/requests";
 
 export default function Home() {
-	const user = localStorage.getItem("user");
 	const userData = useContext(UserContext);
 	const [sidebar, setSidebar] = useState(true);
-	const [activePage, setActivePage] = useState("/");
+	const [activePage, setActivePage] = useState("/home");
 	const [projects, setProjects] = useState<any[]>([]);
 
 	useEffect(() => {
-		if (!user) {
-			window.location.href = "/login";
-		}
-
 		const token = userData.userData.token;
 		const req = getProjects(token);
 		req.then(res => {
@@ -30,7 +25,7 @@ export default function Home() {
 			toast.error(err.response.data.message);
 		});
 	}, []);
-
+	
 	return (
 		<>
 			<Sidebar sidebar={sidebar} setSidebar={setSidebar} setActivePage={setActivePage} />
@@ -44,14 +39,19 @@ export default function Home() {
 				</NewProject>
 				<h3>Seus projetos recentes</h3>
 				<Projects>
-					{projects.slice(0, 3).map((p) => (
-						<Project key={p.id}>
-							<p>{p.name}</p>
-						</Project>
-					))}
-					<Invisible>
-						<DotsIcon onClick={() => window.location.href = "/projetos"} />
-					</Invisible>
+					{projects.length === 0 && <p>Você ainda não tem projetos. Comece agora mesmo.</p>}
+					{projects.length !== 0 && (
+						<>
+							{projects.slice(0, 3).map((p) => (
+								<Project key={p.id}>
+									<p>{p.name}</p>
+								</Project>
+							))}
+							<Invisible>
+								<DotsIcon onClick={() => window.location.href = "/projetos"} />
+							</Invisible>
+						</>
+					)}
 				</Projects>
 			</Content>
 		</>
@@ -128,6 +128,18 @@ const Projects = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	margin-bottom: 20px;
+
+	p{
+		color: #BFBFBF;
+		font-size: 16px;
+		font-weight: 500;
+		line-height: 19px;
+
+		@media (min-width: 768px) {
+			font-size: 19px;
+			line-height: 22px;
+		}
+	}
 `;
 
 const Project = styled.div`
