@@ -26,12 +26,23 @@ export default function Home() {
 				<h1>Olá, {userData.userData.userName}</h1>
 				<h2>O que vai fazer hoje?</h2>
 				<h3>Iniciar um novo projeto</h3>
-				<Project>
+				<NewProject>
 					<TbNewSection />
-				</Project>
+				</NewProject>
 				<h3>Seus projetos recentes</h3>
 				<Projects>
-					
+					<Project>
+						T
+					</Project>
+					<Project>
+						T
+					</Project>
+					<Project>
+						T
+					</Project>
+					<Project>
+						T
+					</Project>
 				</Projects>
 			</Content>
 		</>
@@ -79,6 +90,24 @@ const Content = styled.div`
 	}
 `;
 
+const NewProject = styled.div`
+	width: 70px;
+	height: 70px;
+	background: #1E1782;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 50px;
+	cursor: pointer;
+	margin-right: 10px;
+	margin-bottom: 10px;
+
+	@media (min-width: 768px) {
+		width: 100px;
+		height: 100px;
+		font-size: 60px;
+	}
+`;
 
 const Projects = styled.div`
 	display: flex;
@@ -89,28 +118,34 @@ const Projects = styled.div`
 const Project = styled.div`
 	width: 70px;
 	height: 70px;
-	border-radius: 20px;
-	background: #1E1782;
-	opacity: 0.7;
+	font-size: 40px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	outline: calc(70px/2) solid #0009;
+	outline-offset: calc(70px/-2);
+	cursor: pointer;
+	transition: 0.3s;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 50px;
-	cursor: pointer;
-	margin-right: 10px;
-	margin-bottom: 10px;
 
 	&:hover{
+		outline: 4px solid #1E1782;
+		outline-offset: 10px;
 		background: #1E1782;
-		opacity: 1;
 	}
 
 	@media (min-width: 768px) {
 		width: 100px;
 		height: 100px;
-		border-radius: 30px;
 		font-size: 60px;
-		margin-right: 20px;
-		margin-bottom: 20px;
+		outline: calc(100px/2) solid #0009;
+		outline-offset: calc(100px/-2);
+		margin-bottom: 25px;
+		margin-right: 25px;
+
+		&:hover{
+			outline-offset: 12px;
+		}
 	}
 `;
