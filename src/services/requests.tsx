@@ -41,3 +41,7 @@ export function getTasks(token: string, projectId: string) {
 export function updateATask(token: string, body: { projectId: string, name: string, description: string }, taskId: string) {
 	return axios.post(`${BASE_URL}/update-task/${taskId}`, body, setConfig(token));
 }
+
+export function deleteATask(token: string, projectId: string, taskId: string) {
+	return axios.post(`${BASE_URL}/delete-task/${projectId}/${taskId}`, {}, setConfig(token));
+}

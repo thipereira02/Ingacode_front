@@ -3,15 +3,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { toast } from "react-toastify";
-import { TiPencil } from "react-icons/ti";
+import { RxUpdate } from "react-icons/rx";
 import { MdDeleteOutline } from "react-icons/md";
-
 
 import App from "../layouts/App";
 import UserContext from "../contexts/UserContext";
 import ProjectContext from "../contexts/ProjectContext";
 import TaskForm from "../components/Project/TaskForm";
-import { getTasks, updateATask } from "../services/requests";
+import { deleteATask, getTasks, updateATask } from "../services/requests";
 
 export default function Project(){
 	const { projectId } = useParams<{ projectId: string }>();
@@ -56,6 +55,20 @@ export default function Project(){
 		}
 	}
 
+	function deleteTask(id: string){
+		if (projectId !== undefined) {
+			const taskId = id;
+			const req = deleteATask(token, projectId, taskId);
+			req.then(() => {
+				toast.success("Task deletada com sucesso!");
+				setUpdate(!update);
+			}).catch(err => {
+				console.log(err);
+				toast.error(err.response.data.message);
+			});
+		}
+	}
+
 	return (
 		<App>
 			<h1>Projeto:</h1>
@@ -81,14 +94,18 @@ export default function Project(){
 												(t: any) => {
 													if(t.id === task.id){
 														t.name = e.target.value;
+														t.changed = true;
 													}
 													return t;
 												}
 											)
 										)}
-									/>								
-									<TiPencil style={{marginRight: 10, fontSize: 20}} onClick={() => updateTask(task.id)} />
-									<MdDeleteOutline style={{fontSize: 20}} />
+									/>
+									{task.changed ?								
+										<RxUpdate style={{marginRight: 10, fontSize: 20, cursor: "pointer"}} onClick={() => updateTask(task.id)} />
+										:
+										<MdDeleteOutline style={{fontSize: 20, cursor: "pointer"}} onClick={() => deleteTask(task.id)} />
+									}
 								</div>
 								<EditableDescription
 									rows={800}	
@@ -99,6 +116,7 @@ export default function Project(){
 											(t: any) => {
 												if(t.id === task.id){
 													t.description = e.target.value;
+													t.changed = true;
 												}
 												return t;
 											}
