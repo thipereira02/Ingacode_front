@@ -29,3 +29,7 @@ export function createProject(token: string, body: { name: string }) {
 export function addProjectCollaborator(token: string, body: { name: string }) {
 	return axios.post(`${BASE_URL}/new-collaborator`, body, setConfig(token));
 }
+
+export function addTask(token: string, body: { projectId: string, name: string, description: string }) {
+	return axios.post(`${BASE_URL}/new-task`, body, setConfig(token));
+}

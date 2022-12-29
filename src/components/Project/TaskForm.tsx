@@ -1,13 +1,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 
 import { Title, ArrowIcon, Form, Input, Label, ButtonForm, Submit } from "../../layouts/Common";
+import UserContext from "../../contexts/UserContext";
+import { addTask } from "../../services/requests";
 
-export default function TaskForm({ userData }: any) {
+export default function TaskForm({ projectId }: { projectId: any }) {
+	const { userData } = useContext(UserContext);
 	const [newTask, setNewTask] = useState("");
 	const [taskDescription, setTaskDescription] = useState("");
 	const [showTasksForm, setShowTasksForm] = useState(false);
+
+	function createTask(e: React.FormEvent) {
+		e.preventDefault();
+
+		const token = userData.token;
+		const body = {
+			projectId,
+			name: newTask,
+			description: taskDescription
+		};
+		const req = addTask(token, body);
+		req.then(() => {
+			toast.success("Task criada com sucesso!");
+			setNewTask("");
+			setTaskDescription("");
+			setShowTasksForm(false);
+		}).catch(err => {
+			toast.error("Erro ao criar task");
+			console.log(err);
+		});
+	}
 
 	return (
 		<>
@@ -15,7 +39,7 @@ export default function TaskForm({ userData }: any) {
 				<h3>Adicionar task</h3>
 				<ArrowIcon showForm={showTasksForm} />
 			</Title>
-			<Form showForm={showTasksForm}>
+			<Form showForm={showTasksForm} onSubmit={createTask} >
 				<div>
 					<Input
 						type="text"
@@ -26,6 +50,8 @@ export default function TaskForm({ userData }: any) {
 						required
 					/>
 					<Label>Título da Task</Label>
+				</div>
+				<div>
 					<Input
 						type="text"
 						value={taskDescription}

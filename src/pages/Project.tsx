@@ -4,20 +4,17 @@ import styled from "styled-components";
 
 import App from "../layouts/App";
 import ProjectContext from "../contexts/ProjectContext";
-import UserContext from "../contexts/UserContext";
 import TaskForm from "../components/Project/TaskForm";
 
 export default function Project(){
 	const { projectId } = useParams();
 	const { projectData } = useContext(ProjectContext);
-	const { userData } = useContext(UserContext);
-	console.log(userData);
 
 	return (
 		<App>
 			<h1>Projeto:</h1>
 			<h2>{projectData.name}</h2>
-			<TaskForm userData={userData} />
+			<TaskForm projectId ={projectId} />
 			<Board>
 				<Collumn>
 					<Title>Não iniciadas</Title>
