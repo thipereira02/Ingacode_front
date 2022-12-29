@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 export const Input = styled.input`
     position: relative;
@@ -206,4 +207,27 @@ export const Project = styled.div`
 			background: #1E1782;
 		}
 	}
+`;
+
+export const Title = styled.div`
+    display: flex;
+    align-items: center;
+    margin: 32px 0 24px;
+    cursor: pointer;
+
+    h3 {
+        margin: 0;
+    }
+`;
+
+export const ArrowIcon = styled(MdOutlineKeyboardArrowDown)<{ showForm: boolean }>`
+    margin-left: 8px;
+    font-size: 32px;
+    transform: ${props => (props.showForm ? "rotate(180deg)" : "rotate(0deg)")};
+    transition: transform 0.3s ease-in-out;
+`;
+
+export const Form = styled.form<{ showForm: boolean }>`
+    display: ${props => (props.showForm ? "flex" : "none")};
+    flex-direction: column;
 `;

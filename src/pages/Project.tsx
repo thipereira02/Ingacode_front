@@ -4,16 +4,20 @@ import styled from "styled-components";
 
 import App from "../layouts/App";
 import ProjectContext from "../contexts/ProjectContext";
+import UserContext from "../contexts/UserContext";
+import TaskForm from "../components/Project/TaskForm";
 
 export default function Project(){
 	const { projectId } = useParams();
 	const { projectData } = useContext(ProjectContext);
-	console.log(projectData);
+	const { userData } = useContext(UserContext);
+	console.log(userData);
 
 	return (
 		<App>
 			<h1>Projeto:</h1>
 			<h2>{projectData.name}</h2>
+			<TaskForm userData={userData} />
 			<Board>
 				<Collumn>
 					<Title>Não iniciadas</Title>
@@ -69,7 +73,7 @@ const Title = styled.div`
 	padding: 10px;
 	font-size: 20px;
 	font-weight: 500;
-	
+
 `;
 
 const Task = styled.div`

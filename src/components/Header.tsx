@@ -36,6 +36,7 @@ const Container = styled.div<{ left: boolean }>`
     font-size: 16px;
     font-weight: 500;
     color: #BFBFBF;
+    z-index: 1;
 
     div{
         width: 40px;
