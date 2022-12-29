@@ -37,3 +37,7 @@ export function addTask(token: string, body: { projectId: string, name: string, 
 export function getTasks(token: string, projectId: string) {
 	return axios.get(`${BASE_URL}/get-tasks/${projectId}`, setConfig(token));
 }
+
+export function updateATask(token: string, body: { projectId: string, name: string, description: string }, taskId: string) {
+	return axios.post(`${BASE_URL}/update-task/${taskId}`, body, setConfig(token));
+}
