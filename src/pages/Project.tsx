@@ -1,20 +1,44 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { toast } from "react-toastify";
 
 import App from "../layouts/App";
+import UserContext from "../contexts/UserContext";
 import ProjectContext from "../contexts/ProjectContext";
 import TaskForm from "../components/Project/TaskForm";
+import { getTasks } from "../services/requests";
 
 export default function Project(){
-	const { projectId } = useParams();
+	const { projectId } = useParams<{ projectId: string }>();
+	const { userData } = useContext(UserContext);
 	const { projectData } = useContext(ProjectContext);
+	const [update, setUpdate] = useState(false);
+	const [tasks, setTasks] = useState([]);
+	console.log(tasks);
+
+	{projectId !== undefined &&
+		useEffect(() => {
+			const token = userData.token;
+			const req = getTasks(token, projectId);
+			req.then(res => {
+				setTasks(res.data);
+			}).catch(err => {
+				console.log(err);
+				toast.error(err.response.data.message);
+			});
+		}, [update]);
+	}
 
 	return (
 		<App>
 			<h1>Projeto:</h1>
 			<h2>{projectData.name}</h2>
-			<TaskForm projectId ={projectId} />
+			<TaskForm 
+				projectId ={projectId}
+				update={update}
+				setUpdate={setUpdate}
+			/>
 			<Board>
 				<Collumn>
 					<Title>Não iniciadas</Title>

@@ -6,7 +6,7 @@ import { Title, ArrowIcon, Form, Input, Label, ButtonForm, Submit } from "../../
 import UserContext from "../../contexts/UserContext";
 import { addTask } from "../../services/requests";
 
-export default function TaskForm({ projectId }: { projectId: any }) {
+export default function TaskForm({ projectId, update, setUpdate }: { projectId: any, update: boolean, setUpdate: (update: boolean) => void }) {
 	const { userData } = useContext(UserContext);
 	const [newTask, setNewTask] = useState("");
 	const [taskDescription, setTaskDescription] = useState("");
@@ -27,8 +27,9 @@ export default function TaskForm({ projectId }: { projectId: any }) {
 			setNewTask("");
 			setTaskDescription("");
 			setShowTasksForm(false);
+			setUpdate(!update);
 		}).catch(err => {
-			toast.error("Erro ao criar task");
+			toast.error(err.response.data.message);
 			console.log(err);
 		});
 	}
