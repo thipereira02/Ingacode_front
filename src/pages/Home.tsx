@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { Projects, Project } from "../layouts/Common";
 import UserContext from "../contexts/UserContext";
 import ActivePageContext from "../contexts/ActivePageContext";
+import ProjectContext from "../contexts/ProjectContext";
 import { getProjects } from "../services/requests";
 import App from "../layouts/App";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +16,7 @@ export default function Home() {
 	const navigate = useNavigate();
 	const { userData } = useContext(UserContext);
 	const { setActivePage } = useContext(ActivePageContext);
+	const { setProjectData } = useContext(ProjectContext);
 	const [projects, setProjects] = useState<any[]>([]);
 
 	useEffect(() => {
@@ -28,9 +30,11 @@ export default function Home() {
 		});
 	}, []);
 
-	function goTo(path: string){
+	function goTo(path: string, data: any){
 		navigate(path);
-		setActivePage(path);
+		setProjectData(data);
+		if (data.length !== 0) setActivePage("Mmeus projetos");
+		else setActivePage(path);
 	}
 	
 	return (
@@ -38,7 +42,7 @@ export default function Home() {
 			<h1>Olá, {userData.userName}</h1>
 			<h2>O que vai fazer hoje?</h2>
 			<h3>Iniciar um novo projeto</h3>
-			<NewProject onClick={() => goTo("/novo-projeto")} >
+			<NewProject onClick={() => goTo("/novo-projeto", {})} >
 				<TbNewSection />
 			</NewProject>
 			<h3>Seus projetos recentes</h3>
@@ -47,12 +51,12 @@ export default function Home() {
 				{projects.length !== 0 && (
 					<>
 						{projects.slice(0, 3).map((p) => (
-							<Project key={p.id}>
+							<Project key={p.id} onClick={() => goTo(`/projeto/${p.id}`, p)}>
 								<p>{p.name}</p>
 							</Project>
 						))}
 						<Invisible>
-							<DotsIcon onClick={() => goTo("/projetos")} />
+							<DotsIcon onClick={() => goTo("/meus-projetos", {})} />
 						</Invisible>
 					</>
 				)}

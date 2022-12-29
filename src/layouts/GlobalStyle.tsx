@@ -68,6 +68,21 @@ const GlobalStyle = createGlobalStyle`
 		scroll-behavior: smooth;
 		font-family: "Montserrat", sans-serif;
     }
+
+	::-webkit-scrollbar {
+		width: 10px;
+	}
+
+	::-webkit-scrollbar-track {
+		box-shadow: inset 0 0 5px grey;
+		border-radius: 10px;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background-image: linear-gradient(180deg, #1E1782 0%, #7fda56 99%);
+		box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+		border-radius: 100px;
+	}
 `;
 
 export default GlobalStyle;

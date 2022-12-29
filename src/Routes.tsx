@@ -8,38 +8,54 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import UserContext from "./contexts/UserContext";
 import ActivePageContext from "./contexts/ActivePageContext";
+import ProjectContext from "./contexts/ProjectContext";
 import AddProject from "./pages/AddProject";
 import UserProjects from "./pages/UserProjects";
+import Project from "./pages/Project";
+
+interface Project {
+	id: string;
+	name: string;
+	createdAt: string;
+	updatedAt: string;
+	deletedAt: string;
+	userId: string;
+	wasDeleted: boolean;
+}
 
 const ProjectRoutes = () => {
 	const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("user") || "{}"));
-	const [activePage, setActivePage] = useState("Home");
+	const [activePage, setActivePage] = useState("HHome");
+	const [projectData, setProjectData] = useState({} as Project);
 
 	return (
 		<UserContext.Provider value={{ userData, setUserData }}>
 			<ActivePageContext.Provider value={{ activePage, setActivePage }}>
-				<BrowserRouter>
-					<GlobalStyle />
-					<ToastContainer
-						position="top-center"
-						autoClose={5000}
-						hideProgressBar={false}
-						newestOnTop={false}
-						closeOnClick
-						rtl={false}
-						pauseOnFocusLoss
-						draggable
-						pauseOnHover
-						theme="dark" />
-					<Routes>
-						<Route path="/" element={<Login />} />
-						<Route path="/sign-up" element={<Login />} />
-						<Route path="/home" element={<Home />} />
-						<Route path="/novo-projeto" element={<AddProject />} />
-						<Route path="/projetos" element={<UserProjects />} />
-						<Route path="*" element={<Navigate to="/" />} />
-					</Routes>
-				</BrowserRouter>
+				<ProjectContext.Provider value={{ projectData, setProjectData }}>
+					<BrowserRouter>
+						<GlobalStyle />
+						<ToastContainer
+							position="top-center"
+							autoClose={5000}
+							hideProgressBar={false}
+							newestOnTop={false}
+							closeOnClick
+							rtl={false}
+							pauseOnFocusLoss
+							draggable
+							pauseOnHover
+							theme="dark" />
+						<Routes>
+							<Route path="/" element={<Login />} />
+							<Route path="/sign-up" element={<Login />} />
+							<Route path="/home" element={<Home />} />
+							<Route path="/novo-projeto" element={<AddProject />} />
+							<Route path="/meus-projetos" element={<UserProjects />} />
+							<Route path="/projeto/:projectId" element={<Project />} />
+							<Route path="*" element={<Navigate to="/" />} />
+						</Routes>
+					</BrowserRouter>
+				</ProjectContext.Provider>
 			</ActivePageContext.Provider>
 		</UserContext.Provider>
 	);

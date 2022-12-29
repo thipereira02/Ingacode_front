@@ -29,7 +29,7 @@ export default function Sidebar({ sidebar, setSidebar }: { sidebar:boolean, setS
 						<HomeIcon  sidebarWidth={sidebar}/>
 						<p>Home</p>
 					</Icon>
-					<Icon sidebarWidth={sidebar} disabled={sidebar} onClick={() => goTo("/projetos")}>
+					<Icon sidebarWidth={sidebar} disabled={sidebar} onClick={() => goTo("/meus-projetos")}>
 						<ProjectsIcon sidebarWidth={sidebar} />
 						<p>Projetos</p>
 					</Icon>

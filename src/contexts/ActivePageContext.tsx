@@ -5,6 +5,6 @@ interface ActivePageContextProps {
     setActivePage: (data: string) => void;
 }
 
-const UserContext = createContext({} as ActivePageContextProps);
+const ActivePageContext = createContext({} as ActivePageContextProps);
 
-export default UserContext;
+export default ActivePageContext;
