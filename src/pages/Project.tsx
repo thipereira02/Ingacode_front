@@ -18,13 +18,22 @@ export default function Project(){
 	const { projectData } = useContext(ProjectContext);
 	const [update, setUpdate] = useState(false);
 	const [tasks, setTasks] = useState<any[]>([]);
+	const [deletedTasks, setDeletedTasks] = useState<any[]>([]);
 	const token = userData.token;
+
+	function filterTasks(tasks: any){
+		const deletedTasks = tasks.filter((task: any) => task.wasDeleted === true);
+		setDeletedTasks(deletedTasks);
+
+		const activeTasks = tasks.filter((task: any) => task.wasDeleted === false);
+		setTasks(activeTasks);
+	}
 
 	{projectId !== undefined &&
 		useEffect(() => {
 			const req = getTasks(token, projectId);
 			req.then(res => {
-				setTasks(res.data);
+				filterTasks(res.data);
 			}).catch(err => {
 				console.log(err);
 				toast.error(err.response.data.message);
@@ -108,7 +117,7 @@ export default function Project(){
 									}
 								</div>
 								<EditableDescription
-									rows={800}	
+									rows={1000}	
 									placeholder={task.description}
 									value={task.description}
 									onChange={(e: any) => setTasks(
@@ -135,9 +144,16 @@ export default function Project(){
 				</Collumn>
 				<Collumn>
 					<Title>Concluídas</Title>
-					<Task>
-
-					</Task>
+					{deletedTasks.map((task: any) => {
+						return (
+							<Task key={task.id}>
+								<h4>{task.name}</h4>
+								<TextArea>
+									<p>{task.description}</p>
+								</TextArea>
+							</Task>
+						);
+					})}
 				</Collumn>
 			</Board>
 		</App>
@@ -187,6 +203,11 @@ const Task = styled.div`
 			font-weight: 500;
 		}
 	}
+
+	h4{
+		font-size: 20px;
+		font-weight: 500;
+	}
 `;
 
 const EditableTitle = styled.input`
@@ -207,6 +228,31 @@ const EditableDescription = styled.textarea`
 	overflow-y: scroll;
 	resize: none;
 	margin-top: 10px;
+
+	:hover::-webkit-scrollbar-thumb {
+        background-color: #BFBFBF;
+    }
+    ::-webkit-scrollbar {
+        width: 2px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 20px;
+    }
+`;
+
+const TextArea = styled.div`
+	width: 100%;
+	overflow-y: scroll;
+	word-break: break-all;
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+
+	p{
+		font-size: 16px;
+		line-height: 1.2;
+	}
 
 	:hover::-webkit-scrollbar-thumb {
         background-color: #BFBFBF;
