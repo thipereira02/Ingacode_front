@@ -12,6 +12,7 @@ export default function Container({ children }: any) {
 
 const ContainerWrapper = styled.div`
 	padding: 80px 20px 0 90px;
+	word-break: break-word;
 
 	h1{
 		color: #FFF;

@@ -52,7 +52,9 @@ export default function Home() {
 					<>
 						{projects.slice(0, 3).map((p) => (
 							<Project key={p.id} onClick={() => goTo(`/projeto/${p.id}`, p)}>
-								<p>{p.name}</p>
+								<div>
+									<p>{p.name}</p>
+								</div>
 							</Project>
 						))}
 						<Invisible>

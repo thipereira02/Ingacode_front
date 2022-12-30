@@ -180,12 +180,16 @@ export const Project = styled.div`
 	font-weight: 500;
 	margin-right: 20px;
 	margin-bottom: 20px;
-	word-break: break-all;
-	overflow-y: hidden;
 	cursor: pointer;
 	padding: 10px;
 	background: #1E1782;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    div{
+        height: 80%;
+        word-break: break-all;
+        overflow-y: hidden;
+    }
 
 	@media (min-width: 768px) {
 		width: 242px;
