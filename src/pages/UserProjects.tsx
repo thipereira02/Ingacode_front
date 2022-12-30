@@ -10,7 +10,7 @@ import App from "../layouts/App";
 import { Title, ArrowIcon, Form, Input, Label, ButtonForm, Submit, Projects } from "../layouts/Common";
 import UserContext from "../contexts/UserContext";
 import ProjectContext from "../contexts/ProjectContext";
-import { addProjectCollaborator, getProjects, updateProject } from "../services/requests";
+import { addProjectCollaborator, deleteAProject, getProjects, updateProject } from "../services/requests";
 
 export default function UserProjects() {
 	const navigate = useNavigate();
@@ -73,6 +73,18 @@ export default function UserProjects() {
 		});
 	}
 
+	function deleteProject(id: string){
+		const projectId = id;
+		const req = deleteAProject(token, projectId);
+		req.then(() => {
+			toast.success("Projeto deletado com sucesso!");
+			setRefresh(!refresh);
+		}).catch(err => {	
+			console.log(err);
+			toast.error(err.response.data.message);
+		});
+	}
+
 	return (
 		<App>
 			<h1>Esses são seus projetos</h1>
@@ -130,7 +142,7 @@ export default function UserProjects() {
 										<span>
 											{project.changed ? 
 												<RxUpdate style={{marginRight: 5, fontSize: 18, cursor: "pointer"}} onClick={() => update(project.id)}/> :
-												<MdDeleteOutline style={{fontSize: 18, cursor: "pointer"}} />
+												<MdDeleteOutline style={{fontSize: 18, cursor: "pointer"}} onClick={() => deleteProject(project.id)}/>
 											}
 										</span>
 									</Icons>
