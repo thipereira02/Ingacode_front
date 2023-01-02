@@ -62,3 +62,7 @@ export function getCollaborators(token: string) {
 export function addNewTimeTracker(token: string, body: { startDate: string, endDate: string, timeZoneId: string, collaboratorId: any }, taskId: string) {
 	return axios.post(`${BASE_URL}/new-time-tracker/${taskId}`, body, setConfig(token));
 }
+
+export function getTaskTimeTrackers(token: string, taskId: string) {
+	return axios.get(`${BASE_URL}/task-time-trackers/${taskId}`, setConfig(token));
+}

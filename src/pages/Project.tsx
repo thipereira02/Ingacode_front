@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 import { RxUpdate } from "react-icons/rx";
-import { MdDeleteOutline } from "react-icons/md";
+import { MdDeleteOutline, MdForward } from "react-icons/md";
 import { AiOutlineFieldTime } from "react-icons/ai";
 
 import App from "../layouts/App";
@@ -29,7 +29,6 @@ export default function Project(){
 			const req = getTasks(token, projectId);
 			req.then(res => {
 				filterTasks(res.data);
-				console.log(res.data);
 			}).catch(err => {
 				console.log(err);
 				toast.error(err.response.data.message);
@@ -117,6 +116,7 @@ export default function Project(){
 											)
 										)}
 									/>
+									<MdForward style={{marginRight: 5, fontSize: 20, cursor: "pointer"}} onClick={() => navigate(`/projeto/${task.id}/time-trackers`)} />
 									<AiOutlineFieldTime style={{marginRight: 5, fontSize: 20, cursor: "pointer"}} onClick={() => navigate(`/projeto/${task.id}/novo-time-tracker`)} />
 									{task.changed ?								
 										<RxUpdate style={{marginRight: 10, fontSize: 20, cursor: "pointer"}} onClick={() => updateTask(task.id)} />
@@ -152,6 +152,7 @@ export default function Project(){
 								<div>
 									<h4>{task.name}</h4>
 									<span>
+										<MdForward style={{marginRight: 5, fontSize: 18, cursor: "pointer"}} onClick={() => navigate(`/projeto/${task.id}/time-trackers`)} />
 										<AiOutlineFieldTime style={{marginRight: 5, fontSize: 18, cursor: "pointer"}} onClick={() => navigate(`/projeto/${task.id}/novo-time-tracker`)} />
 										<MdDeleteOutline style={{fontSize: 18, cursor: "pointer"}} onClick={() => deleteTask(task.id)} />
 									</span>
@@ -207,7 +208,7 @@ const Title = styled.div`
 const Task = styled.div`
 	width: 100%;
 	height: 200px;
-	background-color: red;
+	background-color: #1E1782;
 	margin-bottom: 10px;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
 	display: flex;

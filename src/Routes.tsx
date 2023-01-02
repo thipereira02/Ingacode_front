@@ -13,6 +13,7 @@ import AddProject from "./pages/AddProject";
 import UserProjects from "./pages/UserProjects";
 import Project from "./pages/Project";
 import AddTimeTracker from "./pages/AddTimeTracker";
+import TaskTimeTrackers from "./pages/TaskTimeTrackers";
 
 interface Project {
 	id: string;
@@ -54,6 +55,7 @@ const ProjectRoutes = () => {
 							<Route path="/meus-projetos" element={<UserProjects />} />
 							<Route path="/projeto/:projectId" element={<Project />} />
 							<Route path="/projeto/:taskId/novo-time-tracker" element={<AddTimeTracker />} />
+							<Route path="/projeto/:taskId/time-trackers/" element={<TaskTimeTrackers />} />
 							<Route path="*" element={<Navigate to="/" />} />
 						</Routes>
 					</BrowserRouter>
