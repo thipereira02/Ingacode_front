@@ -1,23 +1,41 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FaProjectDiagram, FaHome, FaPowerOff, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 import symbol from "../assets/logo.png";
 import logo from "../assets/tasky.png";
 import ActivePageContext from "../contexts/ActivePageContext";
+import UserContext from "../contexts/UserContext";
+import { deleteSession } from "../services/requests";
 
 export default function Sidebar({ sidebar, setSidebar }: { sidebar:boolean, setSidebar: (sidebar: boolean) => void }) {
 	const navigate = useNavigate();
 	const { setActivePage } = useContext(ActivePageContext);
+	const { userData } = useContext(UserContext);
 
 	function goTo(path: string) {
 		navigate(path);
 		setActivePage(path);
 	}
 
+	function logout() {
+		if (window.confirm("Deseja realmente sair?")) {
+			const token = userData.token;
+			const req = deleteSession(token);
+			req.then(() => {
+				localStorage.clear();
+				navigate("/");
+			}).catch(err => {
+				toast.error("Erro ao sair");
+				console.log(err);
+			});
+		}
+	}
+
 	return (
-		<>
+		<>/usr/share/code/resources/app/out/vs/code/electron-sandbox/workbench/workbench.html
 			<Container 
 				onMouseOver={() => setSidebar(false)} 
 				onMouseLeave={() => setSidebar(true)} 
@@ -34,7 +52,7 @@ export default function Sidebar({ sidebar, setSidebar }: { sidebar:boolean, setS
 						<p>Projetos</p>
 					</Icon>
 				</Icons>
-				<Icon sidebarWidth={sidebar} disabled={sidebar}>
+				<Icon sidebarWidth={sidebar} disabled={sidebar} onClick={logout}>
 					<LogoutIcon sidebarWidth={sidebar} />
 					<p>Logout</p>
 				</Icon>

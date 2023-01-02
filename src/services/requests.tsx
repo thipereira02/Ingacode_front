@@ -66,3 +66,7 @@ export function addNewTimeTracker(token: string, body: { startDate: string, endD
 export function getTaskTimeTrackers(token: string, taskId: string) {
 	return axios.get(`${BASE_URL}/task-time-trackers/${taskId}`, setConfig(token));
 }
+
+export function deleteSession(token: string) {
+	return axios.post(`${BASE_URL}/logout`, {}, setConfig(token));
+}
