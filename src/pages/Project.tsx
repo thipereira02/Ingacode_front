@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 import { RxUpdate } from "react-icons/rx";
 import { MdDeleteOutline } from "react-icons/md";
+import { AiOutlineFieldTime } from "react-icons/ai";
 
 import App from "../layouts/App";
 import UserContext from "../contexts/UserContext";
@@ -13,6 +14,7 @@ import TaskForm from "../components/Project/TaskForm";
 import { deleteATask, getTasks, updateATask } from "../services/requests";
 
 export default function Project(){
+	const navigate = useNavigate();
 	const { projectId } = useParams<{ projectId: string }>();
 	const { userData } = useContext(UserContext);
 	const { projectData } = useContext(ProjectContext);
@@ -110,6 +112,7 @@ export default function Project(){
 											)
 										)}
 									/>
+									<AiOutlineFieldTime style={{marginRight: 5, fontSize: 20, cursor: "pointer"}} onClick={() => navigate(`/projeto/${task.id}/novo-time-tracker`)} />
 									{task.changed ?								
 										<RxUpdate style={{marginRight: 10, fontSize: 20, cursor: "pointer"}} onClick={() => updateTask(task.id)} />
 										:

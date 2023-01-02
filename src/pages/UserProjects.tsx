@@ -7,7 +7,7 @@ import { MdDeleteOutline, MdForward } from "react-icons/md";
 import styled from "styled-components";
 
 import App from "../layouts/App";
-import { Title, ArrowIcon, Form, Input, Label, ButtonForm, Submit, Projects } from "../layouts/Common";
+import { ArrowIcon, Form, Input, Label, ButtonForm, Submit, Projects } from "../layouts/Common";
 import UserContext from "../contexts/UserContext";
 import ProjectContext from "../contexts/ProjectContext";
 import { addProjectCollaborator, deleteAProject, getProjects, updateProject } from "../services/requests";
@@ -193,6 +193,17 @@ export const Project = styled.div`
 			background: #1E1782;
 		}
 	}
+`;
+
+export const Title = styled.div`
+    display: flex;
+    align-items: center;
+    margin: 32px 0 24px;
+    cursor: pointer;
+
+    h3 {
+        margin: 0;
+    }
 `;
 
 export const EditableName = styled.textarea`

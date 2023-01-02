@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useContext, useState } from "react";
+import styled from "styled-components";
 import { toast } from "react-toastify";
 
-import { Title, ArrowIcon, Form, Input, Label, ButtonForm, Submit } from "../../layouts/Common";
+import { ArrowIcon, Form, Input, Label, ButtonForm, Submit } from "../../layouts/Common";
 import UserContext from "../../contexts/UserContext";
 import { addTask } from "../../services/requests";
 
@@ -76,3 +77,14 @@ export default function TaskForm({ projectId, update, setUpdate }: { projectId: 
 		</>
 	);
 }
+
+export const Title = styled.div`
+    display: flex;
+    align-items: center;
+    margin: 32px 0 24px;
+    cursor: pointer;
+
+    h3 {
+        margin: 0;
+    }
+`;

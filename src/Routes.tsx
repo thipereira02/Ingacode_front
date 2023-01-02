@@ -12,6 +12,7 @@ import ProjectContext from "./contexts/ProjectContext";
 import AddProject from "./pages/AddProject";
 import UserProjects from "./pages/UserProjects";
 import Project from "./pages/Project";
+import AddTimeTracker from "./pages/AddTimeTracker";
 
 interface Project {
 	id: string;
@@ -52,6 +53,7 @@ const ProjectRoutes = () => {
 							<Route path="/novo-projeto" element={<AddProject />} />
 							<Route path="/meus-projetos" element={<UserProjects />} />
 							<Route path="/projeto/:projectId" element={<Project />} />
+							<Route path="/projeto/:taskId/novo-time-tracker" element={<AddTimeTracker />} />
 							<Route path="*" element={<Navigate to="/" />} />
 						</Routes>
 					</BrowserRouter>

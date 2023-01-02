@@ -53,3 +53,11 @@ export function updateATask(token: string, body: { projectId: string, name: stri
 export function deleteATask(token: string, projectId: string, taskId: string) {
 	return axios.post(`${BASE_URL}/delete-task/${projectId}/${taskId}`, {}, setConfig(token));
 }
+
+export function getCollaborators(token: string) {
+	return axios.get(`${BASE_URL}/my-collaborators`, setConfig(token));
+}
+
+export function addNewTimeTracker(token: string, body: { startDate: string, endDate: string, timeZoneId: string, collaboratorId: any }, taskId: string) {
+	return axios.post(`${BASE_URL}/new-time-tracker/${taskId}`, body, setConfig(token));
+}
