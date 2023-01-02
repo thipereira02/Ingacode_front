@@ -20,27 +20,32 @@ export default function Project(){
 	const { projectData } = useContext(ProjectContext);
 	const [update, setUpdate] = useState(false);
 	const [tasks, setTasks] = useState<any[]>([]);
+	const [inExecutionTasks, setInExecutionTasks] = useState<any[]>([]);
 	const [deletedTasks, setDeletedTasks] = useState<any[]>([]);
 	const token = userData.token;
-
-	function filterTasks(tasks: any){
-		const deletedTasks = tasks.filter((task: any) => task.wasDeleted === true);
-		setDeletedTasks(deletedTasks);
-
-		const activeTasks = tasks.filter((task: any) => task.wasDeleted === false);
-		setTasks(activeTasks);
-	}
 
 	{projectId !== undefined &&
 		useEffect(() => {
 			const req = getTasks(token, projectId);
 			req.then(res => {
 				filterTasks(res.data);
+				console.log(res.data);
 			}).catch(err => {
 				console.log(err);
 				toast.error(err.response.data.message);
 			});
 		}, [update]);
+	}
+
+	function filterTasks(tasks: any){
+		const deletedTasks = tasks.filter((task: any) => task.wasDeleted === true);
+		setDeletedTasks(deletedTasks);
+
+		const inExecutionTasks = tasks.filter((task: any) => task.timeTrackers.length > 0 && task.wasDeleted === false);
+		setInExecutionTasks(inExecutionTasks);
+
+		const activeTasks = tasks.filter((task: any) => task.timeTrackers.length === 0 && task.wasDeleted === false);
+		setTasks(activeTasks);
 	}
 
 	function updateTask(id: string){
@@ -141,9 +146,22 @@ export default function Project(){
 				</Collumn>
 				<Collumn>
 					<Title>Em execução</Title>
-					<Task>
-
-					</Task>
+					{inExecutionTasks.map((task: any) => {
+						return (
+							<Task key={task.id}>
+								<div>
+									<h4>{task.name}</h4>
+									<span>
+										<AiOutlineFieldTime style={{marginRight: 5, fontSize: 18, cursor: "pointer"}} onClick={() => navigate(`/projeto/${task.id}/novo-time-tracker`)} />
+										<MdDeleteOutline style={{fontSize: 18, cursor: "pointer"}} onClick={() => deleteTask(task.id)} />
+									</span>
+								</div>
+								<TextArea>
+									<p>{task.description}</p>
+								</TextArea>
+							</Task>
+						);
+					})}
 				</Collumn>
 				<Collumn>
 					<Title>Concluídas</Title>

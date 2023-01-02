@@ -55,14 +55,26 @@ export default function AddTimeTracker() {
 		const collaboratorId = selectedCollaborator;
 
 		const today = new Date().toISOString();
+		if (startDate > endDate) {
+			toast.error("A data de início não pode ser maior que a data de término");
+			return;
+		}
+
 		if (startDate < today) {
 			toast.error("A data de início não pode ser menor que a data atual");
 			return;
 		}
 
-		if (endDate < startDate) {
-			toast.error("A data de término não pode ser menor que a data de início");
-			return;
+		if (startDate === endDate) {
+			const initialHour = new Date(startDate).getHours();
+			const initialMinutes = new Date(startDate).getMinutes();
+			const finalHour = new Date(endDate).getHours();
+			const finalMinutes = new Date(endDate).getMinutes();
+
+			if ((initialHour > finalHour) || (initialHour === finalHour && initialMinutes > finalMinutes)){
+				toast.error("A hora de início não pode ser maior que a hora de término");
+				return;
+			}
 		}
 
 		const body = {
@@ -71,7 +83,6 @@ export default function AddTimeTracker() {
 			timeZoneId,
 			collaboratorId: collaboratorId || null
 		};
-
 		if (taskId !== undefined) {
 			const req = addNewTimeTracker(token, body, taskId);
 			req.then(() => {
